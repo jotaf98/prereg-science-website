@@ -1,0 +1,204 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+%     \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_2020
+
+% ready for submission
+% \usepackage{neurips_2020}
+
+% to compile a preprint version, e.g., for submission to arXiv, add add the
+% [preprint] option:
+    \usepackage[preprint,nonatbib]{neurips_2020}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+%     \usepackage[final]{neurips_2020}
+
+% to avoid loading the natbib package, add option nonatbib:
+    %  \usepackage[nonatbib]{neurips_2020}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dirtytalk}
+
+\title{Submitting to the 1\textsuperscript{st} NeurIPS \\ pre-registration workshop}
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+% \author{%
+%   David S.~Hippocampus\thanks{Use footnote for providing further information
+%     about author (webpage, alternative address)---\emph{not} for acknowledging
+%     funding agencies.} \\
+%   Department of Computer Science\\
+%   Cranberry-Lemon University\\
+%   Pittsburgh, PA 15213 \\
+%   \texttt{hippo@cs.cranberry-lemon.edu} \\
+%   % examples of more authors
+%   % \And
+%   % Coauthor \\
+%   % Affiliation \\
+%   % Address \\
+%   % \texttt{email} \\
+%   % \AND
+%   % Coauthor \\
+%   % Affiliation \\
+%   % Address \\
+%   % \texttt{email} \\
+%   % \And
+%   % Coauthor \\
+%   % Affiliation \\
+%   % Address \\
+%   % \texttt{email} \\
+%   % \And
+%   % Coauthor \\
+%   % Affiliation \\
+%   % Address \\
+%   % \texttt{email} \\
+% }
+
+\begin{document}
+
+\maketitle
+\input{macros}
+\begin{abstract}
+Pre-registration reorders the traditional publishing life-cycle.  The key idea is simple: to separate exploratory analysis from hypothesis testing.
+While both components are important elements of the scientific process, they must be kept distinct to ensure that the hypothesis testing remains meaningful.  Pre-registration makes this separation explicit and allows the reader of a paper to clearly differentiate between the authors' predictions and exploratory analysis and \say{postdictions} (insights and intuition that were developed after observing the evidence).
+
+We are organizing the first workshop of pre-registered studies in machine learning at NeurIPS 2020.
+In this tutorial, we briefly outline the motivations of the workshop and we guide the authors through the submission process.
+The workshop website is \url{https://preregister.science}.
+\end{abstract}
+
+\section{Motivation}
+\label{sec:introduction}
+
+
+As our field continues to rapidly expand in terms of number of researchers and number of new papers produced every year, it is vital to ensure scientific rigor, such that published papers can be deemed as a useful and reliable source of information for the growing audience consuming them.
+As observed in recent compelling position papers~\cite{lipton2018troubling,forde2019scientific,gencoglu2019hark}, the field appears to be affected by certain ``troubling trends''~\cite{lipton2018troubling} that are compromising the empirical credibility of the community at large.
+In computer vision, these trends materialise as several widespread malpractices, such as:
+\begin{tight_it}
+\item Evaluating a proposed method using a range of benchmarks and performance measures, but only reporting the results supporting a ``positive'' narrative for the submission.
+\item Conducting a brute-force trial-and-error approach until one combination of techniques is  ``state of the art'' (SOTA), then structuring the writing to harmoniously present the successful set of techniques.
+\item Proposing a new contribution, but then evaluating it jointly with other orthogonal modifications (such as data augmentation or architecture tweaking) without appropriate ablation studies.
+\end{tight_it}
+We suggest that these approaches are not the fault of any individual author, but rather are implicitly encouraged by the current review structure, which does not carefully distinguish between exploratory and confirmatory analysis.  Since the evaluation protocols are not fixed in advance, there is considerable opportunity to search over different benchmarks, model variants and data selections until \say{good numbers} can be obtained.  Much of this can happen subconsciously as the researchers evolve their idea and experimental protocol in parallel. 
+
+The status quo is problematic for several reasons: 
+\begin{tight_it}
+    \item It over-inflates reviewers' expectation of the numerical improvements that should be yielded by a new method to be considered \say{a contribution}.  To compete, all authors must participate in this game to some extent (or suffer a considerable disadvantage in the review process).
+    \item Evaluations that are conducted in this manner lose their statistical strength---the results are less likely to hold beyond the precise configuration used for reported experiments.  Importantly, readers of a paper have no way to assess the number of confirmatory experiments that were conducted before the final set are selected for publication.  Note that greater computational resources thus become a significant advantage beyond the ideation and exploratory phase---holding all other variables fixed, they provide a larger set of experimental evaluations to select results from.  
+\end{tight_it}
+
+\section{The pre-registration protocol}
+\label{sec:preregistration}
+The aim of this workshop is to
+try and address this issue by introducing the \emph{pre-registration} submission protocol to the machine learning community.
+The concept is simple: first, authors submit a proposal (the \textbf{proposal paper}, Section~\ref{sec:structure}) before performing confirmatory experiments; then, if the paper is accepted, they conduct the proposed experiments and report their outcome in the \textbf{results paper} (Section~\ref{sec:post}).
+Importantly, at the end of the process, the overall paper is published irrespective of the results achieved.
+
+This submission model was introduced to avoid wasteful replication of results in clinical trials~\cite{dickersin2003registering} and it is now enjoying increasing popularity in several scientific communities~\cite{nosek2018preregistration}.
+It has been shown that studies following the pre-registration model tend to have better replicability~\cite{swaen2001false} and present a healthy ratio of positive and negative results~\cite{irvin2015likelihood}.
+Moreover, two positions papers by Gencoglu \emph{et al.}~\cite{gencoglu2019hark} and Forde \& Paganinini ~\cite{forde2019scientific} recently encouraged the community to experiment with it as a promising strategy to address the malpractices outlined in Section~\ref{sec:introduction}.
+
+The hope is that this approach will nudge our community towards a different system of incentives, one that promotes scientific insights and rigorously evaluated ideas, not ``state-of-the-art results'' for the sake of getting a paper past peer review.
+
+\section{Structure}
+\subsection{The \emph{proposal paper}}
+\label{sec:structure}
+The following is not a strict structure the authors are supposed to follow, just our suggestion.
+The authors are free to use a different one, provided that it follows the spirit of pre-registered studies described in Section~\ref{sec:introduction} and~\ref{sec:preregistration}.
+
+We recommend to follow an outline comprising of four sections: \emph{introduction}, \emph{related work}, \emph{methodology} and \emph{experimental protocol}.
+The first three sections are unlikely to change drastically comparing to a traditional submission.
+However, please consider devoting particular focus to convince the reader of the interestingness and novelty of the proposed approach, as conclusive empirical considerations will only be expressed after acceptance.
+As a general guideline, please consider that you will not be able to do significant edits to the proposal paper after it has been accepted -- the \emph{proposal} and \emph{results} should ``flow'' once they are combined together.
+
+%-- the results paper containing experimental results and conclusions will be simply appended to the proposal.
+
+A key section of a proposal paper is the \textbf{experimental protocol}.
+As a guiding principle, authors should aim to describe the planned experiments to the degree that a competent researcher working in the area could carry out the experiments without further communication.
+
+Note that this is the appropriate section to describe things such us:
+\begin{tight_it}
+\item Ablative studies.
+\item Variations that are orthogonal with the proposed idea; optimisers, types of regularisation, types/depth of architectures, ...
+\item Important hyper-parameters and hyper-parameter search.
+\item Baselines and recent methods to compare against.
+\end{tight_it}
+
+A good protocol {\bf does not mean testing all possible variations} and hyper-parameters.
+It only means that a pre-defined set of rules will be followed.
+
+For example, some authors may be considering 3 standard network architectures, A, B and C, to test their method. The protocol will list the 3 architectures explicitly, but the experiments may vary:
+
+\begin{description}
+\item[Option 1] Exhaustive evaluation. Testing all architectures may be feasible or not, depending on the authors' resources.
+\item[Option 2] Sequential evaluation, with the least expensive architectures being evaluated first. Not all may be evaluated in the end, making this option more feasible.
+\end{description}
+
+Another example is in choosing the hyper-parameters:
+
+\begin{description}
+\item[Option 1] Grid search (expensive).
+\item[Option 2] Random search, with the same computational budget given to all methods (flexible).
+\item[Option 3] Manual search (documenting the number of trials) in Dataset 1, followed by evaluation with the same hyper-parameters in Dataset 2.
+\end{description}
+
+The idea is to describe the rules you are going to follow, which does not always mean being exhaustive.
+
+We remark that \textbf{no conclusive results should be included} at this stage.
+However, \textbf{it is allowed to include in the proposal paper the results of preliminary experiments} that serve to validate the initial intuitions and motivate the experimental protocol.
+You can also speculate on what results are expected or what their significance would be for different outcomes.
+
+\subsection{The \emph{results paper}}
+\label{sec:post}
+After the proposal paper has been reviewed and accepted, the authors will upload a new document containing two extra sections: experimental results and conclusion.
+%In the proceedings, these will simply be appended to the proposal.
+
+\section{Paper format, review process and important dates}
+
+%We are accepting both full and short format papers (use of the short format should allow the preregistered study to be usable as part of a CVPR 2020 submission---more details below).
+%Due to the two-part nature of the final paper, the length guidelines are slightly more complex than usual:
+
+%\begin{description}
+%\item[Full]
+The \textbf{proposal paper} should not exceed \emph{five} pages (\emph{excluding} references).
+There will be no strict limit for the \textbf{results paper}, but as a guideline we suggest two to four pages.
+
+%\item[Short] The \textbf{proposal paper} should not exceed \emph{three} pages (\emph{including} references).  The combined proposal paper and results paper should not exceed four pages (\emph{including} references).
+%Under current rules, the adoption of the short format will allow the study to be usable as part of a CVPR submission, as stated in the conference website %\footnote{\url{http://cvpr2019.thecvf.com/submission/main_conference/author_guidelines}} (though it is possible this policy may change).
+%\end{description}
+
+%\paragraph{Style.}
+Please use the NeurIPS 2020 format (which you can find at \url{https://neurips.cc/Conferences/2020/PaperInformation/StyleFiles}) for both proposal and results paper.
+The results paper does not need an abstract or introduction.
+
+% \section{Review Process}
+% \label{sec:review}
+Please find a detailed description of the review process for pre-registered papers and important dates at \url{https://preregister.science/instructions.html}.
+
+\section{Conclusion}
+Thank you for submitting to the first pre-registered studies workshop in machine learning!
+We hope it is going to be a fun and creative process for the authors and, overall, a useful experiment for the community.
+
+\bibliographystyle{plain}
+{\small
+\bibliography{refs}
+}
+
+\end{document}
