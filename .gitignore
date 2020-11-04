@@ -1,2 +1,4 @@
 *.html.swp
 .idea
+.DS_Store
+*.texpadtmp
