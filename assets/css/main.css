@@ -3566,3 +3566,14 @@ input, select, textarea {
 			}
 
 	}
+
+
+/* custom stuff */
+#schedule-timezone > select {
+	display: inline;
+	height: 1.6em;
+	width: 5.5em;
+	padding: 0;
+	margin-left: 0.5em;
+	line-height: 1em;
+}

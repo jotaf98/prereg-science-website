@@ -136,10 +136,10 @@
 				</header>
 
 				<div class="table-wrapper">
-					<table>
+					<table id="schedule">
 						<thead>
 							<tr>
-								<th>Start (GMT)</th><th>Session</th><th>Duration</th>
+								<th id="schedule-timezone">Time (UTC)</th><th>Session</th><th>Duration</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -525,6 +525,56 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
+		<script>
+			// record original UTC time as data-utc attribute
+			let schedule = document.getElementById("schedule");
+			for (let i = 1; i < schedule.rows.length; i++) {
+				let cell = schedule.rows[i].cells[0];
+				cell.dataset.utc = cell.innerText;
+			}
+
+			function change_timezone(offset) {
+				// change the timezone to the given integer offset, by editing the table
+				for (let j = 1; j < schedule.rows.length; j++) {
+					let cell = schedule.rows[j].cells[0];  // table cell
+					let parts = cell.dataset.utc.split(':');  // split hours:minutes from original stored UTC time
+					let new_hour = parseInt(parts[0]) + offset;  // add offset to the original UTC time
+					let suffix = "";
+					if (new_hour >= 24) {  // wrap around
+						new_hour -= 24;
+						suffix = " (next day)";
+					}
+					if (new_hour < 0){
+						new_hour += 24;
+						suffix = " (prev. day)";
+					}
+					parts[0] = new_hour.toString();
+					cell.innerText = parts.join(':') + suffix;
+				}
+			}
+
+			// create and populate the dropdown
+			let timezone_select = document.createElement("select");
+			let timezone_wrapper = document.getElementById("schedule-timezone");
+			let span = document.createElement("span");
+			span.innerText = "Time";
+			timezone_wrapper.innerHTML = "";
+			timezone_wrapper.appendChild(span);
+			timezone_wrapper.appendChild(timezone_select);
+			for (let i = -12; i <= 12; i++) {
+				let option = document.createElement("option");
+				if (i >= 0)
+					option.text = "UTC+" + i.toString();
+				else
+					option.text = "UTC" + i.toString();  // has a minus
+				option.onclick = (event => change_timezone(i))
+				timezone_select.appendChild(option);
+			}
+
+			// initialize with the local UTC offset
+			let utc_offset_hours = -(new Date().getTimezoneOffset()) / 60;
+			timezone_select.selectedIndex = utc_offset_hours + 12;
+		</script>
 
 	</body>
 </html>
