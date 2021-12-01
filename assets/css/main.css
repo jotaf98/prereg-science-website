@@ -2404,6 +2404,15 @@ input, select, textarea {
 				width: 100%;
 			}
 
+		.image.circle {
+			border-radius: 50%;
+		}
+	
+			.image.circle img {
+				border-radius: 50%;
+			}
+		
+			
 /* List */
 
 	ol {
@@ -2675,7 +2684,10 @@ input, select, textarea {
 			font-size: 0.9em;
 			font-weight: 400;
 			padding: 0 0.75em 0.75em 0.75em;
-			text-align: left;
+			/*text-align: left;*/
+		}
+		.style2 table th {
+			color: #ddd;
 		}
 
 		table thead {
