@@ -891,7 +891,11 @@
 				cell.dataset.utc = cell.innerText;
 			}
 
-			function change_timezone(offset) {
+			function change_timezone(event) {
+				// get the selected offset by chopping off the "UTC" prefix from the
+				// selected string, and interpreting the rest as an int
+				let offset = parseInt(event.target.value.slice(3));
+
 				// change the timezone to the given integer offset, by editing the table
 				for (let j = 1; j < schedule.rows.length; j++) {
 					let cell = schedule.rows[j].cells[0];  // table cell
@@ -925,9 +929,9 @@
 					option.text = "UTC+" + i.toString();
 				else
 					option.text = "UTC" + i.toString();  // has a minus
-				option.onclick = (event => change_timezone(i))
 				timezone_select.appendChild(option);
 			}
+			timezone_select.addEventListener('change', change_timezone);
 
 			// initialize with the local UTC offset
 			let utc_offset_hours = -(new Date().getTimezoneOffset()) / 60;
